@@ -6,7 +6,7 @@ var CLOUD_OFFSETX = 100;
 var CLOUD_OFFSETY = 10;
 var CLOUD_WIDTH = 420;
 var CLOUD_HEIGHT = 270;
-var TEXT_MARGIN = 30;
+var TEXT_MARGIN = 25;
 var SHADOW_OFFSETX = 10;
 var SHADOW_OFFSETY = 10;
 var BAR_WIDTH = 40;
@@ -22,6 +22,18 @@ var renderCloud = function(ctx, shadowColor, cloudColor) {
   ctx.fillRect(CLOUD_OFFSETX, CLOUD_OFFSETY, CLOUD_WIDTH, CLOUD_HEIGHT);
 }
 
+var getMaxNumber = function(arr) {
+  for (var i = 0; i < arr.length; i++) {
+    if (arr[i] > arr[i+1]) {
+      var maxNumber = arr[i];
+    }
+    return maxNumber;
+  }
+}
+
+// maxNumber = 150;
+// times[i] = x
+
 window.renderStatistics = function(ctx, names, times) {
   // почему вызов этой функции идет через window, а предыдущая объявляется через var? в чем вобще разнциа?
   renderCloud(ctx, 'rgba(0, 0, 0, 0.7)', 'rgba(255, 255, 255, 1)');
@@ -31,15 +43,15 @@ window.renderStatistics = function(ctx, names, times) {
   ctx.fillText('Ура вы победили!', CLOUD_OFFSETX + TEXT_MARGIN, CLOUD_OFFSETY + TEXT_MARGIN);
   ctx.fillText('Список результатов:', CLOUD_OFFSETX + TEXT_MARGIN, CLOUD_OFFSETY + TEXT_MARGIN*2);
   for (var i = 0; i < names.length; i++) {
+    ctx.fillText(names[i], CLOUD_OFFSETX + BAR_MARGIN + (BAR_WIDTH+BAR_MARGIN) * i, CLOUD_OFFSETY + BAR_HEIGHT + TEXT_MARGIN * 4);
+    ctx.fillText((Math.floor(times[i])).toString(), CLOUD_OFFSETX + BAR_MARGIN + (BAR_WIDTH+BAR_MARGIN) * i, CLOUD_OFFSETY + TEXT_MARGIN * 3);
     if (names[i] == 'Вы') {
       ctx.fillStyle = 'rgba(255, 0, 0, 1)'
     }
     else {
-      var random = Math.floor(Math.random() * 101) + '%';
+      var random = 'Math.floor(Math.random() * 101)' + '%';
       ctx.fillStyle = 'hsl(250, random, random)';
     }
-    ctx.fillRect(CLOUD_OFFSETX+BAR_WIDTH+BAR_MARGIN, CLOUD_OFFSETY+TEXT_MARGIN*3, BAR_WIDTH, BAR_HEIGHT);
-    ctx.fillText(names[i], CLOUD_OFFSETX+BAR_WIDTH+BAR_MARGIN, CLOUD_OFFSETY+BAR_HEIGHT);
-    BAR_MARGIN = BAR_MARGIN + 60;
+    ctx.fillRect(CLOUD_OFFSETX + BAR_MARGIN + (BAR_WIDTH+BAR_MARGIN) * i, CLOUD_OFFSETY + TEXT_MARGIN * 3, BAR_WIDTH, times[i] * BAR_HEIGHT / getMaxNumber(times));
   }
 }
