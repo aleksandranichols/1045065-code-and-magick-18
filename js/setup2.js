@@ -15,16 +15,16 @@ for (var i = 0; i < firstNames.length; i++) {
     name: firstNames[Math.round(Math.random() * i)] + ' ' + lastNames[Math.round(Math.random() * i)],
     eyeColor: eyesColor[i],
     coatColor: coatsColor[i]
-  }
-};
+  };
+}
 var wizardFragment = document.createDocumentFragment();
 var similarListElement = document.querySelector('.setup-similar-list');
-for (var i = 0; i < 4; i++) {
+for (var j = 0; j < 4; j++) {
   var wizardElement = similarWizardTemplate.cloneNode(true);
-  wizardElement.querySelector('.setup-similar-label').textContent = wizards[i].name;
-  wizardElement.querySelector('.wizard-eyes').style.fill = wizards[i].eyeColor;
-  wizardElement.querySelector('.wizard-coat').style.fill = wizards[i].coatColor;
+  wizardElement.querySelector('.setup-similar-label').textContent = wizards[j].name;
+  wizardElement.querySelector('.wizard-eyes').style.fill = wizards[j].eyeColor;
+  wizardElement.querySelector('.wizard-coat').style.fill = wizards[j].coatColor;
   wizardFragment.appendChild(wizardElement);
-};
+}
 similarListElement.appendChild(wizardFragment);
 setupSimilar.classList.remove('hidden');
